@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Webster 1828</string>
+    <string name="action_settings">Settings</string>
+    <color name="my_color">#6699FF</color>
+    <string name="font_settings">Font size</string>
+    <string name="pref_fontTypes_default">Normal</string>
+    <string name="copy_str">Copy Definition</string>
+
+</resources>
