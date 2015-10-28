@@ -11,11 +11,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -25,6 +27,7 @@ import android.util.Log;
 
 import com.rupp.android.dic.webster.DicDatabaseHelper;
 
+@SuppressWarnings("deprecation")
 public class MainActivity extends Activity {
 	AutoCompleteTextView autoComplete; 
 	ArrayAdapter<String> autoAdapter;
@@ -80,6 +83,22 @@ public class MainActivity extends Activity {
 		autoAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,item);
 		autoComplete.setAdapter(autoAdapter);
 		
+		// Listening for the enter key in virtual keyboard
+		autoComplete.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ( (actionId == EditorInfo.IME_ACTION_DONE) || 
+                		((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN ))){
+                	String topic = autoComplete.getText().toString();
+                	getCompleteDefinition(topic);
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        });
+		
       } catch (NullPointerException e) {
           e.printStackTrace();
           Log.e("MainActivity",e.toString());
@@ -113,6 +132,7 @@ public class MainActivity extends Activity {
 			 ClipboardManager cm = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
 		        cm.setText(txtview.getText());
 		        Toast.makeText(getBaseContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+		        break;
 			 
 		 }
 		 return true;

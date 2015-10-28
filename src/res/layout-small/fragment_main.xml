@@ -16,6 +16,8 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:lines="@integer/user_max_line"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         android:maxLines="@integer/user_max_line" 
         android:textSize="20sp"
         android:background="@drawable/border_style" >
